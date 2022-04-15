@@ -9,8 +9,8 @@
 Category.create(name: "Main Dish")
 Category.create(name: "Fried")
 
-MenuItem.create(name: "Nasi Uduk", price: 15000)
-MenuItem.create(name: "Nasi Goreng", price: 15000)
+MenuItem.create(name: "Nasi Uduk", description: "Nasi with Betawi style",price: 15000)
+MenuItem.create(name: "Nasi Goreng", description: "Fried Rice with Kecap", price: 15000)
 
 MenuCategory.create(menu_item_id: 1, category_id: 1)
 MenuCategory.create(menu_item_id: 1, category_id: 2)
