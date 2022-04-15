@@ -3,12 +3,35 @@
 <h1>Menu items</h1>
 
 <div id="menu_items">
-  <% @menu_items.each do |menu_item| %>
+<!--   <% @menu_items.each do |menu_item| %>
     <%= render menu_item %>
     <p>
       <%= link_to "Show this menu item", menu_item %>
     </p>
-  <% end %>
+  <% end %> -->
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+  
+    <% @menu_items.each_with_index do |menu_item, index| %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td><%= menu_item.name %></td>
+        <td><%= menu_item.price %></td>
+        <td><%= link_to "Show this Menu Item", menu_item %></td>
+      </tr>
+    <% end %>
+  
+    </tbody>
+  </table>
 </div>
 
 <%= link_to "New menu item", new_menu_item_path %>
