@@ -17,8 +17,24 @@
   </div>
 
   <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+
+  <div>
     <%= form.label :price, style: "display: block" %>
     <%= form.text_field :price %>
+  </div>
+
+  <div>
+    <%= form.label :category, style: "display: block" %>
+    
+    <% Category.all.each do |category| %>
+      <input type="checkbox" name="category_ids[]" value=<%= category.id %> />
+      <label for=<%= category.id %>><%= category.name %></label><br>
+    <% end %>
+
   </div>
 
   <div>

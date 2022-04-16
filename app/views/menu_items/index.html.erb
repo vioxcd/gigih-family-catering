@@ -15,8 +15,12 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
+        <th scope="col">Description</th>
         <th scope="col">Price</th>
-        <th scope="col">Action</th>
+        <th scope="col">Category</th>
+        <th scope="col">Show</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -25,8 +29,12 @@
       <tr>
         <th scope="row"><%= index+1 %></th>
         <td><%= menu_item.name %></td>
+        <td><%= menu_item.description %></td>
         <td><%= menu_item.price %></td>
-        <td><%= link_to "Show this Menu Item", menu_item %></td>
+        <td><%= menu_item.categories.pluck(:name).join(", ") %></td>
+        <td><%= button_to 'Show', menu_item_path(menu_item), method: 'get' %></td>
+        <td><%= button_to 'Edit', edit_menu_item_path(menu_item), method: 'get' %></td>
+        <td><%= button_to 'Delete', menu_item_path(menu_item), method: 'delete' %></td>
       </tr>
     <% end %>
   
