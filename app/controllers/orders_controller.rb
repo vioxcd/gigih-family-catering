@@ -87,10 +87,10 @@ class OrdersController < ApplicationController
     end
 
     def calculate_total_price
-      total_price = params[:order][:order_details_attributes].map { |x| 
-        menu_item = MenuItem.find(x[:menu_item_id])
-        x[:price] = menu_item.price
-        x[:quantity].to_i * x[:price] 
+      total_price = params[:order][:order_details_attributes].map { |order_detail| 
+        menu_item = MenuItem.find(order_detail[:menu_item_id])
+        order_detail[:price] = menu_item.price
+        order_detail[:quantity].to_i * order_detail[:price] 
       }.sum
       
       params[:order][:total_price] = total_price
