@@ -1,5 +1,5 @@
 class MenuItem < ApplicationRecord
-  has_many :menu_categories
+  has_many :menu_categories, dependent: :destroy
   has_many :categories, through: :menu_categories
   accepts_nested_attributes_for :menu_categories, reject_if: :all_blank, allow_destroy: true
 
@@ -8,6 +8,10 @@ class MenuItem < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :description, length: { maximum: 150 }
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }
+
+  def delete_associate_categories
+    self.menu_categories.destroy_all
+  end
   
   def self.by_letter(letter)
     where("name LIKE ?", "#{letter}%").order(:name)

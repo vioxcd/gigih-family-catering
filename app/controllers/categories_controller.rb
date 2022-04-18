@@ -1,6 +1,8 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
 
+  protect_from_forgery with: :null_session
+
   # GET /categories or /categories.json
   def index
     @categories = Category.all

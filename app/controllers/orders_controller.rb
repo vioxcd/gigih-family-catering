@@ -5,11 +5,14 @@ class OrdersController < ApplicationController
   
   # GET /orders or /orders.json
   def index
-    @orders = Order.filter_by_email(params[:email]).
-      filter_by_min_total_price(params[:min_price]).
-      filter_by_max_total_price(params[:max_price]).
-      filter_by_start_date(params[:start_date]).
-      filter_by_end_date(params[:end_date])
+    
+    @orders = Order
+    .filter_by_email(params[:email])
+    .filter_by_min_total_price(params[:min_price])
+    .filter_by_max_total_price(params[:max_price])
+    .filter_by_start_date(params[:start_date])
+    .filter_by_end_date(params[:end_date])
+    
     render json: @orders.to_json(:include => :order_details) 
   end
 
@@ -49,6 +52,15 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
+    status = params[:order][:status]
+    
+    unless ["NEW", "PAID", "CANCELED"].include? status
+      render json: { message: status + " is not valid enum status" }, status: :bad_request
+      return
+    end
+    
+    @order.delete_associate_order_details
+    
     calculate_total_price
     
     respond_to do |format|
