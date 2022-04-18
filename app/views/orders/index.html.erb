@@ -3,12 +3,45 @@
 <h1>Orders</h1>
 
 <div id="orders">
-  <% @orders.each do |order| %>
+<!--   <% @orders.each do |order| %>
     <%= render order %>
     <p>
       <%= link_to "Show this order", order %>
     </p>
-  <% end %>
+  <% end %> -->
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Order Date</th>
+        <th scope="col">Total Price</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Customer Email</th>
+        <th scope="col">Status</th>
+        <th scope="col">Show</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+  
+    <% @orders.each_with_index do |order, index| %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td><%= order.order_date %></td>
+        <td><%= order.total_price %></td>
+        <td><%= order.customer_name %></td>
+        <td><%= order.customer_email %></td>
+        <td><%= order.status %></td>
+        <td><%= button_to 'Show', order_path(order), method: 'get' %></td>
+        <td><%= button_to 'Edit', edit_order_path(order), method: 'get' %></td>
+        <td><%= button_to 'Delete', order_path(order), method: 'delete' %></td>
+      </tr>
+    <% end %>
+  
+    </tbody>
+  </table>
 </div>
 
 <%= link_to "New order", new_order_path %>
