@@ -1,9 +1,8 @@
 FactoryBot.define do
   factory :order do
-    order_date { "2022-04-16 13:44:16" }
-    total_price { 1.5 }
-    customer_name { "MyString" }
-    customer_email { "MyString" }
-    status { 1 }
+    total_price { 10000 }
+    customer_name { "M Alviand F" }
+    customer_email { Faker::Internet.email }
+    status { :NEW }
   end
 end
