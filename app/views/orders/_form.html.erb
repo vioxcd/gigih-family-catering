@@ -36,7 +36,7 @@
     <%= form.number_field :status %>
   </div>
 
-  <button><%= link_to_add_nested(form, :order_details, '#order-details') %></button> <!-- adds a link to add more items -->
+  <button><%= link_to_add_nested(form, :order_details, '#order-details', link_text: "Add new Order Detail") %></button> <!-- adds a link to add more items -->
   <div id='order-details'>
     <%= form.fields_for :order_details do |order_detail_f| %>
       <%= render 'order_detail_fields', form: order_detail_f %>

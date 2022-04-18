@@ -1,6 +1,9 @@
 class MenuItem < ApplicationRecord
   has_many :menu_categories
   has_many :categories, through: :menu_categories
+  accepts_nested_attributes_for :menu_categories, reject_if: :all_blank, allow_destroy: true
+
+  has_many :order_details
 
   validates :name, presence: true, uniqueness: true
   validates :description, length: { maximum: 150 }

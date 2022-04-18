@@ -1,6 +1,8 @@
 <div class="wrapper-div">
-  <%= form.text_field :menu_item_id %>
-  <%= form.text_field :price %>
+  <% arr_menu_item = MenuItem.all.map { |menu_item| [menu_item.name + " - Price : " + menu_item.price.to_s, menu_item.id] } %>
+  <%= form.label :menu_item_id %>
+  <%= select_tag(:menu_item_id,  options_for_select(arr_menu_item)) %>
+  <%= form.label :quantity %>
   <%= form.text_field :quantity %>
-  <%= link_to_remove_nested(form) %> 
+  <button><%= link_to_remove_nested(form) %></button>
 </div>
