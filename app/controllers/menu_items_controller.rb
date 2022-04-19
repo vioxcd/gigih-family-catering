@@ -11,7 +11,9 @@ class MenuItemsController < ApplicationController
   end
 
   # GET /menu_items/1 or /menu_items/1.json
-  def show; end
+  def show
+    render json: @menu_item.to_json(include: :menu_categories)
+  end
 
   # GET /menu_items/new
   def new
@@ -47,10 +49,7 @@ class MenuItemsController < ApplicationController
   def destroy
     @menu_item.destroy
 
-    respond_to do |format|
-      format.html { redirect_to menu_items_url, notice: 'Menu item was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: { message: 'Menu Item was successfully destroyed.' }
   end
 
   private
@@ -62,22 +61,10 @@ class MenuItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def menu_item_params
-    params.require(:menu_item).permit(:name, :description, :price, menu_categories_attributes: %i[id menu_item_id category_id _destroy])
+    begin
+      params.require(:menu_item).permit(:name, :description, :price, menu_categories_attributes: %i[id menu_item_id category_id _destroy])
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: 'Menu Item not found' }, status: :not_found
+    end
   end
-
-  # def create_menu_category
-  #   @category_ids = params[:category_ids]
-
-  #   return @menu_item.add_error_at_least_one_category if @category_ids.nil?
-
-  #   @menu_category = MenuCategory.where(menu_item_id: @menu_item.id)
-  #   @menu_category.destroy_all
-
-  #   @category_ids.each do |category_id|
-  #     @menu_category = MenuCategory.new(menu_item_id: @menu_item.id, category_id: category_id)
-  #     @menu_category.save
-  #   end
-
-  #   @menu_item.has_category
-  # end
 end
