@@ -1,25 +1,45 @@
-# Rails on Replit
+# Gigih Family Catering
+Ordering Food System with Rails
 
-This is a template to get you started with Rails on Replit. It's ready to go so you can just hit run and start coding!
+## Setup
+```sh
+bundle install
+```
 
-This template was generated using `rails new` (after you install the `rails` gem from the packager sidebar) so you can always do that if you prefer to set it up from scratch. The only had two make config changes we had to make to run it on Replit:
+## Running
+To run this project, you can use **Run Button** in Replit.
+But if you want to run in the localhost, you can use
+```sh
+rails s
+```
 
-- bind the app on `0.0.0.0` instead of `localhost` (see `.replit`)
-- allow `*.repl.co` hosts (see `config/environments/development.rb`)
-- allow the app to be iframed on `replit.com` (see `config/application.rb`)
+## API Documentation
+For Detail API Documentation please check here
+documenter.getpostman.com/view/12824474/Uyr7HeEE
 
-## Running the app
 
-Simple hit run! You can edit the run command from the `.replit` file.
+## Test
+For unit test I use RSpec and you can run the test with
+```sh
+bundle exec rspec -fd
+```
 
-## Running commands
+## Scheduler
+I use rufus-scheduler to run scheduled task, to cancel order that haven't been paid in 5pm, and here is the code
+```sh
+s.cron '0 17 * * *' do
+  orders = Order.where(status: :NEW)  
+  puts orders.size.to_s + " orders cancelled"
+  orders.update_all(status: :CANCELED)
+end
+```
+You can check more detail in config/initializers/scheduler.rb
 
-Start every command with `bundle exec` so that it runs in the context of the installed gems environment. The console pane will give you output from the server but you can run arbitrary command from the shell without stopping the server.
+## Features
+I have completed 7 user stories on the problem statement. And all the bonus points that have been mentioned. And I've added documentation using Postman and Web UI Admin.
 
-## Database
+## Library
 
-SQLite would work in development but we don't recommend running it in production. Instead look into using the built-in [Replit database](http://docs.replit.com/misc/database). Otherwise you are welcome to connect databases from your favorite provider. 
-
-## Help
-
-If you need help you might be able to find an answer on our [docs](https://docs.replit.com) page. Alternatively you can [ask in the community](https://replit.com/talk/ask). Feel free to report bugs [here](https://replit.com/bugs) and give us feedback [here](https://Replit/feedback).
+| Library | README |
+| ------ | ------ |
+| rufus-scheduler | [github.com/jmettraux/rufus-scheduler][PlDb] |
