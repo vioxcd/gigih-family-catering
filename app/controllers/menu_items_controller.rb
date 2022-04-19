@@ -56,7 +56,11 @@ class MenuItemsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_menu_item
-    @menu_item = MenuItem.find(params[:id])
+    begin  
+      @menu_item = MenuItem.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { message: 'Menu Items not found' }, status: :not_found
+    end
   end
 
   # Only allow a list of trusted parameters through.
