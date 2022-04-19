@@ -40,6 +40,6 @@ I have completed 7 user stories on the problem statement. And all the bonus poin
 
 ## Library
 
-| Library | README |
+| Library | Source |
 | ------ | ------ |
-| rufus-scheduler | [github.com/jmettraux/rufus-scheduler][PlDb] |
+| rufus-scheduler | github.com/jmettraux/rufus-scheduler |
