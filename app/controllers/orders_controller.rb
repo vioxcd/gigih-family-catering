@@ -18,10 +18,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1 or /orders/1.json
   def show
-    respond_to do |format|
-      format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
-      format.json { render json: @order.to_json(:include => :order_details) }
-    end
+    render json: @order.to_json(:include => :order_details)
   end
 
   # GET /orders/new
@@ -39,14 +36,10 @@ class OrdersController < ApplicationController
     
     @order = Order.new(order_params)
 
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
-        format.json { render json: @order.to_json(:include => :order_details) }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+    if @order.save
+      render json: @order.to_json(:include => :order_details) 
+    else
+      render json: @order.errors, status: :unprocessable_entity 
     end
   end
 
@@ -55,33 +48,25 @@ class OrdersController < ApplicationController
     status = params[:order][:status]
     
     unless ["NEW", "PAID", "CANCELED"].include? status
-      render json: { message: status + " is not valid enum status" }, status: :bad_request
+      render json: { message: " invalid enum status" }, status: :bad_request
       return
     end
     
     @order.delete_associate_order_details
     
     calculate_total_price
-    
-    respond_to do |format|
-      if @order.update(order_params)
-        format.html { redirect_to order_url(@order), notice: "Order was successfully updated." }
-        format.json { render json: @order.to_json(:include => :order_details) }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+
+    if @order.update(order_params)
+      render json: @order.to_json(:include => :order_details)
+    else
+      render json: @order.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /orders/1 or /orders/1.json
   def destroy
     @order.destroy
-
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
-      format.json { render json: { message: 'Order was successfully destroyed.' } }
-    end
+    render json: { message: 'Order was successfully destroyed.' } 
   end
 
   private

@@ -7,7 +7,7 @@ class MenuItem < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
   validates :description, length: { maximum: 150 }
-  validates :price, numericality: { greater_than_or_equal_to: 0.01 }
+  validates :price,  presence: true, numericality: { greater_than_or_equal_to: 0.01 }
 
   def delete_associate_categories
     self.menu_categories.destroy_all
@@ -22,7 +22,7 @@ class MenuItem < ApplicationRecord
   end
 
   def add_error_at_least_one_category
-    errors.add(:base, 'Must add at least one category')
+    self.errors.add(:category, 'must add at least one category')
   end
   
 end
