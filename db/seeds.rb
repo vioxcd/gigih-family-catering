@@ -14,3 +14,5 @@ MenuItem.create(name: "Nasi Goreng", description: "Fried Rice with Kecap", price
 
 MenuCategory.create(menu_item_id: 1, category_id: 1)
 MenuCategory.create(menu_item_id: 1, category_id: 2)
+
+MenuCategory.create(menu_item_id: 2, category_id: 1)

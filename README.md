@@ -15,8 +15,7 @@ rails s
 
 ## API Documentation
 For Detail API Documentation please check here
-documenter.getpostman.com/view/12824474/Uyr7HeEE
-
+[API Documentation](documenter.getpostman.com/view/12824474/Uyr7HeEE)
 
 ## Test
 For unit test I use RSpec and you can run the test with
@@ -36,10 +35,17 @@ end
 You can check more detail in config/initializers/scheduler.rb
 
 ## Features
-I have completed 7 user stories on the problem statement. And all the bonus points that have been mentioned. And I've added documentation using Postman and Web UI Admin.
+I have completed 7 user stories on the problem statement. And all the bonus points that have been mentioned. And I've added API Documentation using Postman and Web Admin.
+
+## Web Admin
+I use Trestle to make Web Admin
+You can open in **'/admin'** path
+
+**NOTE :** For things that can be done on the web is rather limited, to do more complex things such as insert order with order detail and others please use the API above.
 
 ## Library
 
 | Library | Source |
 | ------ | ------ |
-| rufus-scheduler | github.com/jmettraux/rufus-scheduler |
+| [rufus-scheduler](github.com/jmettraux/rufus-scheduler) | Scheduler |
+| [Trestle](https://github.com/TrestleAdmin/trestle) | Web Admin |

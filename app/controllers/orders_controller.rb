@@ -5,14 +5,13 @@ class OrdersController < ApplicationController
   
   # GET /orders or /orders.json
   def index
-    
     @orders = Order
     .filter_by_email(params[:email])
     .filter_by_min_total_price(params[:min_price])
     .filter_by_max_total_price(params[:max_price])
     .filter_by_start_date(params[:start_date])
     .filter_by_end_date(params[:end_date])
-    
+
     render json: @orders.to_json(:include => :order_details) 
   end
 
@@ -32,6 +31,11 @@ class OrdersController < ApplicationController
 
   # POST /orders or /orders.json
   def create
+    unless menu_item_exist?
+      render json: { message: 'Menu Item not found' }, status: :not_found 
+      return
+    end
+  
     calculate_total_price
     
     @order = Order.new(order_params)
@@ -45,11 +49,13 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
-    status = params[:order][:status]
+    unless menu_item_exist?
+      return render json: { message: 'Menu Item not found' }, status: :not_found 
+    end
     
+    status = params[:order][:status]
     unless ["NEW", "PAID", "CANCELED"].include? status
-      render json: { message: " invalid enum status" }, status: :bad_request
-      return
+      return render json: { message: " invalid enum status" }, status: :bad_request
     end
     
     @order.delete_associate_order_details
@@ -85,11 +91,24 @@ class OrdersController < ApplicationController
 
     def calculate_total_price
       total_price = params[:order][:order_details_attributes].map { |order_detail| 
+
         menu_item = MenuItem.find(order_detail[:menu_item_id])
+        
         order_detail[:price] = menu_item.price
         order_detail[:quantity].to_i * order_detail[:price] 
       }.sum
       
       params[:order][:total_price] = total_price
+    end
+
+    def menu_item_exist?()
+      params[:order][:order_details_attributes].map { |order_detail| 
+        begin
+          MenuItem.find(order_detail[:menu_item_id])
+        rescue ActiveRecord::RecordNotFound
+          return false 
+        end
+        return true
+      }
     end
 end
