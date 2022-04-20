@@ -4,8 +4,8 @@ class Order < ApplicationRecord
 
   enum status: { NEW: 0, PAID: 1, CANCELED: 2 }
   
-  validates :customer_name, presence: true, length: { maximum: 200 }
-  validates :customer_email,  presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: 'invalid email format' }
+  validates :customer_name, presence: true
+  validates :customer_email,  presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, message: 'invalid email format' }
   validates :total_price, numericality: { greater_than_or_equal_to: 0.01 }
   validates :status, inclusion: { in: statuses.keys }
 

@@ -18,6 +18,12 @@ RSpec.describe Order, type: :model do
     expect(order.errors[:customer_email]).to include("can't be blank")
   end
 
+  it "is invalid with invalid email format" do
+    order = FactoryBot.build(:order, customer_email: "halo@gigih")
+    order.valid?
+    expect(order.errors[:customer_email]).to include("invalid email format")
+  end
+
   it "is invalid total_price is less than 0.01" do
     order = FactoryBot.build(:order, total_price: 0.001)
     order.valid?
