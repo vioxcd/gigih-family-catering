@@ -60,7 +60,6 @@ RSpec.describe OrdersController do
 
             parsed_response = JSON.parse(response.body, symbolize_names: true)
             expect(parsed_response).to include(customer_email: 'alvi@gmail.com')
-            # expect(parsed_response).to include(customer_name: "Alviand")
         end
     end
 
