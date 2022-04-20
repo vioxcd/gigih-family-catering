@@ -3,28 +3,28 @@ require 'rails_helper'
 RSpec.describe OrdersController do
     describe 'GET' do
         it 'should return all order' do
-            FactoryBot.create(:order, customer_email: "alviand03@gmail.com")
+            FactoryBot.create(:order, customer_email: "alvi@gmail.com")
 
             get :index
 
             parsed_response = JSON.parse(response.body, symbolize_names: true)
             expect(response).to have_http_status(:ok)
             expect(parsed_response.size).to eq(1)
-            expect(parsed_response[0]).to include(customer_email: 'alviand03@gmail.com')
+            expect(parsed_response[0]).to include(customer_email: 'alvi@gmail.com')
         end
 
         it 'should return all order match with filter' do
-            FactoryBot.create(:order, customer_email: "alviand03@gmail.com", total_price: 20000, created_at: "2019-01-01")
-            FactoryBot.create(:order, customer_email: "alviand03@gmail.com", total_price: 15000, created_at: "2019-01-02")
-            FactoryBot.create(:order, customer_email: "alviand03@gmail.com", total_price: 10000, created_at: "2019-01-03")
+            FactoryBot.create(:order, customer_email: "alvi@gmail.com", total_price: 20000, created_at: "2019-01-01")
+            FactoryBot.create(:order, customer_email: "alvi@gmail.com", total_price: 15000, created_at: "2019-01-02")
+            FactoryBot.create(:order, customer_email: "alvi@gmail.com", total_price: 10000, created_at: "2019-01-03")
             FactoryBot.create(:order, customer_email: "user1@gmail.com", total_price: 5000, created_at: "2019-01-04")
 
-            get :index, params: { email: "alviand03@gmail.com", min_price: 10000, max_price: 20000, start_date: "2019-01-01", end_date: "2019-01-03" }
+            get :index, params: { email: "alvi@gmail.com", min_price: 10000, max_price: 20000, start_date: "2019-01-01", end_date: "2019-01-03" }
 
             parsed_response = JSON.parse(response.body, symbolize_names: true)
             expect(response).to have_http_status(:ok)
             expect(parsed_response.size).to eq(2)
-            expect(parsed_response[0]).to include(customer_email: 'alviand03@gmail.com')
+            expect(parsed_response[0]).to include(customer_email: 'alvi@gmail.com')
         end
 
         it 'should return order' do
@@ -40,7 +40,7 @@ RSpec.describe OrdersController do
 
     describe 'POST' do
         it 'should return created order' do
-            FactoryBot.create(:order, customer_email: "alviand03@gmail.com")
+            FactoryBot.create(:order, customer_email: "alvi@gmail.com")
             FactoryBot.create(:menu_item)
 
             post :create, params: { 

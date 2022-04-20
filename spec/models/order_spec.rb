@@ -31,11 +31,11 @@ RSpec.describe Order, type: :model do
   end
 
   it "should handle filters orders by email well" do
-    order1 = FactoryBot.create(:order, customer_email: 'alviand03@gmail.com')
+    order1 = FactoryBot.create(:order, customer_email: 'alvi@gmail.com')
     order2 = FactoryBot.create(:order, customer_email: 'asd@gmail.com')
-    order3 = FactoryBot.create(:order, customer_email: 'alviand03@gmail.com')
+    order3 = FactoryBot.create(:order, customer_email: 'alvi@gmail.com')
 
-    expect(Order.filter_by_email('alviand03@gmail.com')).to match_array([order1, order3])
+    expect(Order.filter_by_email('alvi@gmail.com')).to match_array([order1, order3])
   end
 
   it "should handle filters orders by minimum total price well" do
