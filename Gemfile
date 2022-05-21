@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.3"
+ruby "3.0.4"
 
 # Nested Form
 gem 'vanilla_nested', github: 'arielj/vanilla-nested', branch: :main

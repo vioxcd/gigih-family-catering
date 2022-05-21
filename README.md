@@ -17,6 +17,14 @@ But if you want to run in the localhost, you can use
 rails s
 ```
 
+## Using Docker
+
+```sh
+docker-compose up -d
+```
+
+Use `docker-compose down` to remove the environment (also, check the image name by running `docker images` and run `docker rmi <image name>` to remove the image)
+
 ## API Documentation
 
 For Detail API Documentation please check here
